@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<h2>Job Application Tracker</h2>
+<a href="/add">Add New Application</a>
+
+<h3>Status Summary</h3>
+<ul>
+{% for s in summary %}
+    <li>{{ s[0] }} : {{ s[1] }}</li>
+{% endfor %}
+</ul>
+
+<table border="1">
+<tr>
+    <th>Company</th>
+    <th>Role</th>
+    <th>Apply Date</th>
+    <th>Status</th>
+    <th>Update</th>
+    <th>Delete</th>
+</tr>
+
+{% for row in data %}
+<tr>
+    <td>{{ row[1] }}</td>
+    <td>{{ row[2] }}</td>
+    <td>{{ row[3] }}</td>
+
+    <td>
+        <form action="/update/{{ row[0] }}" method="post">
+            <select name="status">
+                <option {{ 'selected' if row[4]=='Applied' }}>Applied</option>
+                <option {{ 'selected' if row[4]=='Interview' }}>Interview</option>
+                <option {{ 'selected' if row[4]=='Rejected' }}>Rejected</option>
+                <option {{ 'selected' if row[4]=='Offer' }}>Offer</option>
+            </select>
+    </td>
+
+    <td>
+            <button type="submit">Update</button>
+        </form>
+    </td>
+
+    <td>
+        <a href="/delete/{{ row[0] }}">Delete</a>
+    </td>
+</tr>
+{% endfor %}
+</table>
+
+</body>
+</html>
